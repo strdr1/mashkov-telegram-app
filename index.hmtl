@@ -13,125 +13,244 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #ffffff;
-            color: #000000;
-            padding: 16px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             min-height: 100vh;
+            padding: 0;
+        }
+        
+        .app-container {
+            background: white;
+            color: #333;
+            min-height: 100vh;
+            border-radius: 0;
+            position: relative;
         }
         
         .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 24px 20px;
             text-align: center;
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid #eee;
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 4px 20px rgba(102, 126, 234, 0.3);
         }
         
         .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: #d4a574;
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: 1px;
             margin-bottom: 8px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
         
         .subtitle {
-            color: #666;
             font-size: 14px;
+            opacity: 0.9;
+            font-weight: 300;
         }
         
-        .container {
-            max-width: 400px;
-            margin: 0 auto;
-        }
-        
-        .user-greeting {
-            background: #f8f9fa;
-            padding: 12px 16px;
-            border-radius: 12px;
-            margin-bottom: 20px;
+        .user-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 16px;
+            margin: 20px;
             text-align: center;
-            font-size: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .user-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .user-status {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+        
+        .widget-section {
+            padding: 0 20px 40px;
+        }
+        
+        .widget-title {
+            color: #333;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: center;
         }
         
         .widget-container {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            min-height: 400px;
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            min-height: 500px;
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 2px dashed #e0e0e0;
+            transition: border-color 0.3s;
         }
         
-        .loading {
+        .widget-container.loading {
+            border-color: #667eea;
+        }
+        
+        .loader {
+            text-align: center;
+        }
+        
+        .loader-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .loader-text {
             color: #666;
             font-size: 16px;
-            text-align: center;
+            font-weight: 500;
         }
         
         .footer {
             text-align: center;
+            padding: 20px;
             color: #888;
             font-size: 13px;
-            margin-top: 20px;
+            background: #f8f9fa;
+            border-top: 1px solid #eee;
         }
         
-        .telegram-btn {
+        .powered-by {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+        
+        .telegram-badge {
             background: #0088cc;
             color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 10px;
-            font-size: 16px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: 500;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
+        }
+        
+        /* Адаптация под Telegram тему */
+        :root {
+            --tg-theme-bg-color: #ffffff;
+            --tg-theme-text-color: #000000;
+            --tg-theme-button-color: #667eea;
+        }
+        
+        body.tg-theme-dark {
+            background: #0f0f0f;
+        }
+        
+        body.tg-theme-dark .app-container {
+            background: #1c1c1c;
+            color: #ffffff;
+        }
+        
+        body.tg-theme-dark .widget-container {
+            background: #2d2d2d;
+            border-color: #404040;
+        }
+        
+        /* Мобильная адаптация */
+        @media (max-width: 480px) {
+            .header {
+                padding: 20px 16px;
+            }
+            
+            .logo {
+                font-size: 24px;
+            }
+            
+            .widget-section {
+                padding: 0 16px 30px;
+            }
+            
+            .widget-container {
+                padding: 16px;
+                min-height: 450px;
+            }
+        }
+        
+        /* Анимация появления */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Шапка -->
+    <div class="app-container fade-in">
+        <!-- Шапка с градиентом -->
         <div class="header">
             <div class="logo">MASHKOV</div>
-            <div class="subtitle">Ресторан • mashkov.rest</div>
+            <div class="subtitle">РЕСТОРАН • МОСКВА</div>
         </div>
         
-        <!-- Приветствие -->
-        <div class="user-greeting" id="userGreeting">
-            Забронируйте столик онлайн
+        <!-- Карточка пользователя (только в Telegram) -->
+        <div class="user-card" id="userCard" style="display: none;">
+            <div class="user-name" id="userName">Гость</div>
+            <div class="user-status">Бронирование через Telegram</div>
         </div>
         
-        <!-- Виджет Saby -->
-        <div class="widget-container">
-            <div class="loading" id="loadingText">
-                ⏳ Загрузка системы бронирования...
-            </div>
+        <!-- Основной контент -->
+        <div class="widget-section">
+            <h2 class="widget-title">Забронировать столик</h2>
             
-            <!-- Контейнер для виджета -->
-            <div id="sabyWidget"></div>
+            <div class="widget-container loading" id="widgetContainer">
+                <div class="loader" id="loader">
+                    <div class="loader-spinner"></div>
+                    <div class="loader-text">Загрузка системы бронирования...</div>
+                </div>
+                
+                <!-- Сюда вставится Saby Widget -->
+                <div id="sabyWidget" style="width: 100%;"></div>
+            </div>
         </div>
         
-        <!-- Инструкция -->
+        <!-- Футер -->
         <div class="footer">
-            <p>Бронирование через Telegram Mini App</p>
-            <p>Ресторан Mashkov • Москва</p>
+            <div>Ресторан Mashkov • mashkov.rest</div>
+            <div class="powered-by">
+                <span>Powered by</span>
+                <span class="telegram-badge">Telegram Mini App</span>
+                <span>•</span>
+                <span>Saby Booking</span>
+            </div>
         </div>
-        
-        <!-- Кнопка для теста в браузере -->
-        <button class="telegram-btn" onclick="testInBrowser()" 
-                style="display: none;" id="testBtn">
-            📱 Открыть в Telegram
-        </button>
     </div>
 
-    <!-- ===== SABY WIDGET ===== -->
+    <!-- ========== SABY WIDGET ========== -->
+    <!-- BEGIN SABY WIDGET CODE -->
     <script type="text/javascript" data-saby-widget="c75e63d4-0625-473c-85e6-085fad873248">
     (
        function(win, doc, url) {
@@ -143,26 +262,51 @@
           var pfs = doc.getElementsByTagName('script')[0];
           pfs.parentNode.insertBefore(sws, pfs);
        }
-    )(window, document, "https://site.saby.ru/booking/script/c75e63d4-0625-473c-85e6-085fad873248?pointId=3596");
+    )(window, document, "https://site.saby.ru/booking/script/c75e63d4-0625-473c-85e6-085fad873248");
     </script>
-    <!-- ===== КОНЕЦ SABY WIDGET ===== -->
+    <!-- END SABY WIDGET CODE -->
+    <!-- ========== КОНЕЦ SABY WIDGET ========== -->
 
     <script>
-        // Telegram WebApp инициализация
+        // Telegram Mini App инициализация
         const tg = window.Telegram.WebApp;
         
-        // Проверяем, открыто ли в Telegram
-        if (tg.platform !== 'unknown') {
-            // Мы в Telegram - настраиваем Mini App
+        // Определяем, где мы запущены
+        const isTelegram = tg.platform && tg.platform !== 'unknown';
+        
+        if (isTelegram) {
+            // === ЗАПУЩЕНО В TELEGRAM ===
             tg.ready();
             tg.expand(); // На весь экран
+            
+            // Устанавливаем тему Telegram
+            document.body.classList.add('tg-theme-' + tg.colorScheme);
             
             // Получаем данные пользователя
             const user = tg.initDataUnsafe.user;
             if (user) {
-                const userName = user.first_name + (user.last_name ? ' ' + user.last_name : '');
-                document.getElementById('userGreeting').innerHTML = 
-                    `👋 Привет, ${userName}!<br>Забронируйте столик онлайн`;
+                // Показываем карточку пользователя
+                document.getElementById('userCard').style.display = 'block';
+                
+                // Формируем имя
+                let userName = user.first_name || '';
+                if (user.last_name) {
+                    userName += ' ' + user.last_name;
+                }
+                if (!userName.trim()) {
+                    userName = user.username || 'Гость';
+                }
+                
+                document.getElementById('userName').textContent = userName;
+                
+                // Можно передать данные в виджет (если он поддерживает)
+                window.telegramUserData = {
+                    id: user.id,
+                    firstName: user.first_name,
+                    lastName: user.last_name,
+                    username: user.username,
+                    languageCode: user.language_code
+                };
             }
             
             // Настраиваем кнопку "Назад"
@@ -171,28 +315,95 @@
                 tg.close();
             });
             
-            // Включить подтверждение закрытия
+            // Включаем подтверждение закрытия
             tg.enableClosingConfirmation();
             
+            // Обработка данных из виджета (если нужно)
+            tg.onEvent('webAppDataReceived', (eventData) => {
+                console.log('Данные получены:', eventData);
+                // Можно обработать данные бронирования
+            });
+            
         } else {
-            // Мы в обычном браузере - показываем тестовую кнопку
-            document.getElementById('testBtn').style.display = 'block';
-            document.getElementById('userGreeting').innerHTML = 
-                'Тестовый режим<br>В Telegram будет автоматическая настройка';
+            // === ЗАПУЩЕНО В БРАУЗЕРЕ ===
+            console.log('Запущено в браузере. В Telegram будет автоматическая настройка.');
+            
+            // Для демо показываем тестового пользователя
+            document.getElementById('userCard').style.display = 'block';
+            document.getElementById('userName').textContent = 'Тестовый режим';
         }
         
-        // Функция для открытия в Telegram (для теста в браузере)
-        function testInBrowser() {
-            alert('В реальном Mini App эта ссылка откроется автоматически\n\n' +
-                  'Ссылка на ваш Mini App:\n' +
-                  't.me/MashkovRestBot/myrest');
-            // window.open('https://t.me/MashkovRestBot/myrest', '_blank');
+        // Мониторим загрузку виджета
+        let widgetLoaded = false;
+        
+        // Проверяем, загрузился ли виджет
+        function checkWidgetLoaded() {
+            // Ищем элементы виджета Saby
+            const widgetElements = document.querySelectorAll('[class*="saby"], [id*="saby"], [class*="booking"]');
+            
+            if (widgetElements.length > 0 && !widgetLoaded) {
+                widgetLoaded = true;
+                
+                // Скрываем лоадер
+                document.getElementById('loader').style.display = 'none';
+                document.getElementById('widgetContainer').classList.remove('loading');
+                
+                console.log('✅ Saby Widget загружен');
+                
+                // Если в Telegram, можно отправить событие
+                if (isTelegram) {
+                    tg.HapticFeedback.notificationOccurred('success');
+                }
+            }
         }
         
-        // Скрываем лоадер когда виджет загрузится
+        // Проверяем каждые 500ms
+        const checkInterval = setInterval(checkWidgetLoaded, 500);
+        
+        // Останавливаем проверку через 10 секунд
         setTimeout(() => {
-            document.getElementById('loadingText').style.display = 'none';
-        }, 2000);
+            clearInterval(checkInterval);
+            if (!widgetLoaded) {
+                document.getElementById('loader').innerHTML = `
+                    <div style="color: #e74c3c; text-align: center;">
+                        <div style="font-size: 48px; margin-bottom: 16px;">⚠️</div>
+                        <div style="font-weight: 600; margin-bottom: 8px;">Виджет не загрузился</div>
+                        <div style="font-size: 14px; color: #666;">
+                            Пожалуйста, проверьте подключение<br>
+                            или обновите страницу
+                        </div>
+                        <button onclick="window.location.reload()" 
+                                style="margin-top: 16px; padding: 10px 24px; 
+                                       background: #667eea; color: white; 
+                                       border: none; border-radius: 8px; 
+                                       font-size: 14px; cursor: pointer;">
+                            Обновить страницу
+                        </button>
+                    </div>
+                `;
+            }
+        }, 10000);
+        
+        // Обработчик сообщений от виджета (если он поддерживает)
+        window.addEventListener('message', (event) => {
+            // Можно обрабатывать события от виджета
+            console.log('Message from widget:', event.data);
+            
+            if (event.data && event.data.type === 'BOOKING_SUCCESS' && isTelegram) {
+                // Если виджет отправляет событие успешного бронирования
+                tg.showAlert('✅ Бронирование подтверждено!');
+            }
+        });
+        
+        // Автоматический скролл к виджету на мобильных
+        if (window.innerWidth < 768) {
+            setTimeout(() => {
+                document.getElementById('widgetContainer').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+            }, 1000);
+        }
     </script>
 </body>
 </html>
