@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mashkov - Бронирование</title>
+    
+    <!-- Telegram WebApp SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            color: #000000;
+            padding: 16px;
+            min-height: 100vh;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #d4a574;
+            margin-bottom: 8px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .user-greeting {
+            background: #f8f9fa;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 15px;
+        }
+        
+        .widget-container {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            min-height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .loading {
+            color: #666;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .footer {
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            margin-top: 20px;
+        }
+        
+        .telegram-btn {
+            background: #0088cc;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Шапка -->
+        <div class="header">
+            <div class="logo">MASHKOV</div>
+            <div class="subtitle">Ресторан • mashkov.rest</div>
+        </div>
+        
+        <!-- Приветствие -->
+        <div class="user-greeting" id="userGreeting">
+            Забронируйте столик онлайн
+        </div>
+        
+        <!-- Виджет Saby -->
+        <div class="widget-container">
+            <div class="loading" id="loadingText">
+                ⏳ Загрузка системы бронирования...
+            </div>
+            
+            <!-- Контейнер для виджета -->
+            <div id="sabyWidget"></div>
+        </div>
+        
+        <!-- Инструкция -->
+        <div class="footer">
+            <p>Бронирование через Telegram Mini App</p>
+            <p>Ресторан Mashkov • Москва</p>
+        </div>
+        
+        <!-- Кнопка для теста в браузере -->
+        <button class="telegram-btn" onclick="testInBrowser()" 
+                style="display: none;" id="testBtn">
+            📱 Открыть в Telegram
+        </button>
+    </div>
+
+    <!-- ===== SABY WIDGET ===== -->
+    <script type="text/javascript" data-saby-widget="c75e63d4-0625-473c-85e6-085fad873248">
+    (
+       function(win, doc, url) {
+          var sws = doc.createElement('script');
+          sws.type = 'text/javascript';
+          sws.async = true;
+          sws.src = url;
+
+          var pfs = doc.getElementsByTagName('script')[0];
+          pfs.parentNode.insertBefore(sws, pfs);
+       }
+    )(window, document, "https://site.saby.ru/booking/script/c75e63d4-0625-473c-85e6-085fad873248?pointId=3596");
+    </script>
+    <!-- ===== КОНЕЦ SABY WIDGET ===== -->
+
+    <script>
+        // Telegram WebApp инициализация
+        const tg = window.Telegram.WebApp;
+        
+        // Проверяем, открыто ли в Telegram
+        if (tg.platform !== 'unknown') {
+            // Мы в Telegram - настраиваем Mini App
+            tg.ready();
+            tg.expand(); // На весь экран
+            
+            // Получаем данные пользователя
+            const user = tg.initDataUnsafe.user;
+            if (user) {
+                const userName = user.first_name + (user.last_name ? ' ' + user.last_name : '');
+                document.getElementById('userGreeting').innerHTML = 
+                    `👋 Привет, ${userName}!<br>Забронируйте столик онлайн`;
+            }
+            
+            // Настраиваем кнопку "Назад"
+            tg.BackButton.show();
+            tg.BackButton.onClick(() => {
+                tg.close();
+            });
+            
+            // Включить подтверждение закрытия
+            tg.enableClosingConfirmation();
+            
+        } else {
+            // Мы в обычном браузере - показываем тестовую кнопку
+            document.getElementById('testBtn').style.display = 'block';
+            document.getElementById('userGreeting').innerHTML = 
+                'Тестовый режим<br>В Telegram будет автоматическая настройка';
+        }
+        
+        // Функция для открытия в Telegram (для теста в браузере)
+        function testInBrowser() {
+            alert('В реальном Mini App эта ссылка откроется автоматически\n\n' +
+                  'Ссылка на ваш Mini App:\n' +
+                  't.me/MashkovRestBot/myrest');
+            // window.open('https://t.me/MashkovRestBot/myrest', '_blank');
+        }
+        
+        // Скрываем лоадер когда виджет загрузится
+        setTimeout(() => {
+            document.getElementById('loadingText').style.display = 'none';
+        }, 2000);
+    </script>
+</body>
+</html>
